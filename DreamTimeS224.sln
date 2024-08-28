@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DreamTimeS224", "DreamTimeS224\DreamTimeS224.csproj", "{1A8F076F-C811-400B-9844-A1DBCFE9A8CA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1A8F076F-C811-400B-9844-A1DBCFE9A8CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A8F076F-C811-400B-9844-A1DBCFE9A8CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A8F076F-C811-400B-9844-A1DBCFE9A8CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A8F076F-C811-400B-9844-A1DBCFE9A8CA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {582A6CD8-D11C-41FB-AD19-524EBCE6170C}
+	EndGlobalSection
+EndGlobal
