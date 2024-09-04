@@ -20,3 +20,16 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+/* Specific styling for library cards (with images in header) */
+/* BEM = block__element--modifier (CSS methodology or naming convention) */
+.card--library {
+    padding: 0;
+}
+
+.card--library .card-img-top {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;  /* Resize the image to cover the area without stretching */
+}
