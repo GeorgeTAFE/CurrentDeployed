@@ -8,6 +8,7 @@ namespace DreamTimeS224.Data
     {
         // Create DbSet properties for each entity to track with Entity Framework
         public DbSet<Genre> Genres { get; set; }
+        public DbSet<Book> Books { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
