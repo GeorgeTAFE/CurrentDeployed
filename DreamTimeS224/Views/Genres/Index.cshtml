@@ -1,14 +1,15 @@
 ﻿@model IEnumerable<DreamTimeS224.Models.Genre>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Manage genres";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">+ Add genre</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -25,9 +26,15 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">
+                    <i class="bi bi-pencil-fill"></i>
+                    Edit
+                </a>
+                @* <a asp-action="Details" asp-route-id="@item.Id">Details</a> | *@
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">
+                    <i class="bi bi-trash-fill"></i>
+                    Delete
+                </a>
             </td>
         </tr>
 }
