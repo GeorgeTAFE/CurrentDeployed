@@ -58,10 +58,10 @@ namespace DreamTimeS224.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ISBN,Title,Author,Pages,Description,ImageFilename,Copies,Publisher,DatePublished,Edition")] Book book, int genreId)
+        public async Task<IActionResult> Create([Bind("ISBN,Title,Author,Pages,Description,ImageFilename,Copies,Publisher,DatePublished,Edition,GenreId")] Book book)
         {
             // Turn genre ID into a Genre object
-            Genre? genre = await _context.Genres.FindAsync(genreId);
+            Genre? genre = await _context.Genres.FindAsync(book.GenreId);
 
             //// Check if genre is null and default to the first genre (or some other default)
             //genre = genre ?? await _context.Genres.FirstAsync();
@@ -75,10 +75,13 @@ namespace DreamTimeS224.Controllers
             // Assign genre to the book (previously null)
             book.Genre = genre;
 
-            // Manually revalidate the model (to include the assigned genre)
-            ModelState.Clear();
-            TryValidateModel(book);
-            //await TryUpdateModelAsync(book);
+            // Option 1: Manually revalidate the model (to include the assigned genre)
+            //ModelState.Clear();
+            //TryValidateModel(book);
+            ////await TryUpdateModelAsync(book);
+
+            // Option 2: Remove/ignore validation for the Genre property
+            ModelState.Remove("Genre");
 
             // TODO: Check if ISBN is already in use (book exists)
 

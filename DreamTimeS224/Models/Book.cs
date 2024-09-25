@@ -44,6 +44,6 @@ namespace DreamTimeS224.Models
         // Links/relationships/associations with other entities
         [Required]
         public Genre Genre { get; set; }
-        //public int GenreId { get; set; }  // If this is not specified, EF will create a property/field for the foreign key
+        public int GenreId { get; set; }  // If this is not specified, EF will create a property/field for the foreign key
     }
 }
