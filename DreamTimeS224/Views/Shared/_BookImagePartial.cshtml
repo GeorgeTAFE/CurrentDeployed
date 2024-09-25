@@ -1,0 +1,19 @@
+﻿@model DreamTimeS224.Models.Book
+
+@{
+    // Path to the book image directory
+    string imagePath = "wwwroot/images/books";
+}
+
+@if (File.Exists($"{imagePath}/{Model.ImageFilename}"))
+{
+    <img src="~/images/books/@Model.ImageFilename"
+         alt="Cover image for @Html.DisplayFor(b => Model.Title)"
+         class="book-image-thumbnail" />
+}
+else
+{
+    <img src="~/images/image-placeholder.png"
+         alt="Placeholder image"
+         class="book-image-thumbnail" />
+}

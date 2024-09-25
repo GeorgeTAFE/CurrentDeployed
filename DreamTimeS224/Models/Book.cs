@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace DreamTimeS224.Models
 {
@@ -25,6 +26,7 @@ namespace DreamTimeS224.Models
         
         [Required]
         [DataType(DataType.ImageUrl)]
+        [DisplayName("Image")]
         public string ImageFilename { get; set; }
         
         [Required]
@@ -36,6 +38,8 @@ namespace DreamTimeS224.Models
 
         [Required]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:d MMM yyyy}")]
+        [DisplayName("Publish Date")]
         public DateTime DatePublished { get; set; }
 
         [MaxLength(20)]
@@ -44,6 +48,8 @@ namespace DreamTimeS224.Models
         // Links/relationships/associations with other entities
         [Required]
         public Genre Genre { get; set; }
+        
+        [DisplayName("Genre")]
         public int GenreId { get; set; }  // If this is not specified, EF will create a property/field for the foreign key
     }
 }

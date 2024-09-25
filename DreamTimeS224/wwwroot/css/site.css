@@ -33,3 +33,15 @@ body {
     height: 120px;
     object-fit: cover;  /* Resize the image to cover the area without stretching */
 }
+
+
+/* Manage books */
+
+.manage-books-table td {
+    vertical-align: middle;
+}
+
+.manage-books-table .book-image-thumbnail {
+    max-height: 50px;
+    width: auto;
+}

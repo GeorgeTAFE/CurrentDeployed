@@ -1,17 +1,25 @@
 ﻿@model IEnumerable<DreamTimeS224.Models.Book>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Manage books";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">+ Add book</a>
 </p>
-<table class="table">
+
+<table class="table manage-books-table">
+    <caption>List of books to manage</caption>
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageFilename)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ISBN)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
@@ -19,32 +27,28 @@
                 @Html.DisplayNameFor(model => model.Author)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Pages)
+                @Html.DisplayNameFor(model => model.DatePublished)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageFilename)
+                @Html.DisplayNameFor(model => model.Genre)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Copies)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Publisher)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DatePublished)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Edition)
-            </th>
-            <th></th>
+            <th aria-label="Actions: edit, details, delete"></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @* @Html.DisplayFor(modelItem => item.ImageFilename) *@
+                @* Load the book image thumbnail or default image if unavailable *@
+                <partial name="_BookImagePartial" model="item" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ISBN)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
@@ -52,30 +56,24 @@
                 @Html.DisplayFor(modelItem => item.Author)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Pages)
+                @Html.DisplayFor(modelItem => item.DatePublished)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageFilename)
+                @Html.DisplayFor(modelItem => item.Genre)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Copies)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Publisher)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DatePublished)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Edition)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ISBN">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ISBN">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ISBN">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ISBN" class="btn btn-sm btn-secondary" title="Edit">
+                    <i class="bi bi-pencil-fill" aria-label="Edit"></i>
+                </a>
+                <a asp-action="Details" asp-route-id="@item.ISBN" class="btn btn-sm btn-primary" title="Details">
+                    <i class="bi bi-book-half" aria-label="Details"></i>
+                </a>
+                <a asp-action="Delete" asp-route-id="@item.ISBN" class="btn btn-sm btn-danger" title="Delete">
+                    <i class="bi bi-trash-fill" aria-label="Delete"></i>
+                </a>
             </td>
         </tr>
 }
