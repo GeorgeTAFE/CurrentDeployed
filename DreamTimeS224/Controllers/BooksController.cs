@@ -22,7 +22,11 @@ namespace DreamTimeS224.Controllers
         // GET: Books
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Books.ToListAsync());
+            //return View(await _context.Books.ToListAsync());
+
+            // Get the list of books with theri associated genres
+            // This basically creates an INNER JOIN between Books and Genres
+            return View(await _context.Books.Include(b => b.Genre).ToListAsync());
         }
 
         // GET: Books/Details/5
@@ -116,6 +120,11 @@ namespace DreamTimeS224.Controllers
             {
                 return NotFound();
             }
+
+            // Get a list of genres to populate a dropdown list and pass through using ViewData
+            ViewData["GenreList"] = new SelectList(_context.Genres, "Id", "Name");
+
+            // Load the Create view
             return View(book);
         }
 
@@ -124,13 +133,24 @@ namespace DreamTimeS224.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ISBN,Title,Author,Pages,Description,ImageFilename,Copies,Publisher,DatePublished,Edition")] Book book)
+        public async Task<IActionResult> Edit(string id, [Bind("ISBN,Title,Author,Pages,Description,ImageFilename,Copies,Publisher,DatePublished,Edition,GenreId")] Book book)
         {
-            if (id != book.ISBN)
-            {
-                return NotFound();
-            }
+            // Check if ISBN in URL does not match the book's ISBN
+            if (id != book.ISBN) return BadRequest("ISBNs do not match.");
 
+            // Turn genre ID into a Genre object
+            Genre? genre = await _context.Genres.FindAsync(book.GenreId);
+
+            // Check if genre doesn't exist and throw 404 error (or something nicer)
+            if (genre == null) return NotFound("Oi! Cut it out! Stop messing with the genre ID!");
+
+            // Assign genre to the book (previously null)
+            book.Genre = genre;
+
+            // Remove/ignore validation for the Genre property
+            ModelState.Remove("Genre");
+
+            // Check if model is valid
             if (ModelState.IsValid)
             {
                 try
@@ -149,8 +169,16 @@ namespace DreamTimeS224.Controllers
                         throw;
                     }
                 }
+
+                // Redirect the user to the Index action (listing of models)
                 return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
+
+            // Get a list of genres to populate a dropdown list and pass through using ViewData
+            ViewData["GenreList"] = new SelectList(_context.Genres, "Id", "Name");
+
+            // Display the Edit view with error messages
             return View(book);
         }
 

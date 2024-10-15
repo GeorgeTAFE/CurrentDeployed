@@ -1,72 +1,86 @@
 ﻿@model DreamTimeS224.Models.Book
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit book";
 }
 
-<h1>Edit</h1>
+<h1>@ViewData["Title"]</h1>
 
-<h4>Book</h4>
 <hr />
+
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ISBN" />
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+    <div class="">
+        <form asp-action="Edit" class="d-flex flex-column gap-2">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <input type="hidden" asp-for="ISBN" />
+                        <label asp-for="ISBN" class="control-label"></label>
+                        <input asp-for="ISBN" class="form-control" disabled />
+                        <span asp-validation-for="ISBN" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Title" class="control-label"></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Author" class="control-label"></label>
+                        <input asp-for="Author" class="form-control" />
+                        <span asp-validation-for="Author" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Pages" class="control-label"></label>
+                        <input asp-for="Pages" class="form-control" />
+                        <span asp-validation-for="Pages" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Publisher" class="control-label"></label>
+                        <input asp-for="Publisher" class="form-control" />
+                        <span asp-validation-for="Publisher" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DatePublished" class="control-label"></label>
+                        <input asp-for="DatePublished" class="form-control" />
+                        <span asp-validation-for="DatePublished" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Edition" class="control-label"></label>
+                        <input asp-for="Edition" class="form-control" />
+                        <span asp-validation-for="Edition" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Copies" class="control-label"></label>
+                        <input asp-for="Copies" class="form-control" />
+                        <span asp-validation-for="Copies" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label asp-for="GenreId" class="control-label"></label>
+                        @* <input asp-for="Genre" class="form-control" /> *@
+                        <select asp-for="GenreId" class="form-control form-select" asp-items="@ViewBag.GenreList"></select>
+                        <span asp-validation-for="GenreId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ImageFilename" class="control-label"></label>
+                        <input asp-for="ImageFilename" class="form-control" />
+                        <span asp-validation-for="ImageFilename" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Author" class="control-label"></label>
-                <input asp-for="Author" class="form-control" />
-                <span asp-validation-for="Author" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Pages" class="control-label"></label>
-                <input asp-for="Pages" class="form-control" />
-                <span asp-validation-for="Pages" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageFilename" class="control-label"></label>
-                <input asp-for="ImageFilename" class="form-control" />
-                <span asp-validation-for="ImageFilename" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Copies" class="control-label"></label>
-                <input asp-for="Copies" class="form-control" />
-                <span asp-validation-for="Copies" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Publisher" class="control-label"></label>
-                <input asp-for="Publisher" class="form-control" />
-                <span asp-validation-for="Publisher" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DatePublished" class="control-label"></label>
-                <input asp-for="DatePublished" class="form-control" />
-                <span asp-validation-for="DatePublished" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Edition" class="control-label"></label>
-                <input asp-for="Edition" class="form-control" />
-                <span asp-validation-for="Edition" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+            <div class="form-group text-center border-top mt-2 pt-2">
                 <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

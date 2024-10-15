@@ -7,6 +7,7 @@ namespace DreamTimeS224.Models
     {
         [Key]
         [MaxLength(13)]
+        [RegularExpression(@"^(\d{10}|\d{13})$", ErrorMessage = "Must be a 10- or 13-digit ISBN")]
         public string ISBN { get; set; }
         
         [Required]
