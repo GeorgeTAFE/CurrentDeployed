@@ -23,6 +23,7 @@ namespace DreamTimeS224.Models
         public int Pages { get; set; }
         
         [Required]
+        [DisplayFormat(HtmlEncode = false)]
         public string Description { get; set; }
         
         [Required]

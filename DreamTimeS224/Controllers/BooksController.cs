@@ -24,7 +24,7 @@ namespace DreamTimeS224.Controllers
         {
             //return View(await _context.Books.ToListAsync());
 
-            // Get the list of books with theri associated genres
+            // Get the list of books with their associated genres
             // This basically creates an INNER JOIN between Books and Genres
             return View(await _context.Books.Include(b => b.Genre).ToListAsync());
         }
@@ -32,18 +32,18 @@ namespace DreamTimeS224.Controllers
         // GET: Books/Details/5
         public async Task<IActionResult> Details(string id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            // Check if no ID given
+            if (id == null) return NotFound("Must give a book ID.");
 
+            // Find the book in the database (with associated Genre)
             var book = await _context.Books
+                .Include(b => b.Genre)
                 .FirstOrDefaultAsync(m => m.ISBN == id);
-            if (book == null)
-            {
-                return NotFound();
-            }
 
+            // Check if book does not exist
+            if (book == null) return NotFound("Book not found.");
+
+            // Load the Details view
             return View(book);
         }
 
