@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="~/DreamTimeS224.styles.css" asp-append-version="true" />
     @* Add support for Bootstrap Icons into our website *@
     <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    @* Add support for view-specific stylesheets, e.g. Quill *@
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
     <header>

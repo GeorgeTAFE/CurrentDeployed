@@ -1,0 +1,39 @@
+﻿@* Include the Quill library *@
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+
+<script>
+
+    /**
+     * Initalise a Quill JS editor instance using the specified selectors for the form field and the Quill editor.
+     */
+    function initialiseQuillEditor(formFieldSelector, quillSelector = ".quill-editor") {
+
+        // Enable validation for hidden fields (via jQuery Validator plugin)
+        $.validator.setDefaults({
+            ignore: []  // Default is ":hidden"
+        })
+
+        // Initialise Quill editor
+        const quill = new Quill(quillSelector, {
+            theme: 'snow',
+            modules: {
+                // List of Quill JS formats to customise the toolbar: https://quilljs.com/docs/formats
+                //toolbar: [['bold', 'italic'], ['link', 'image']]
+            },
+        })
+
+        // Get the hidden form field
+        const formField = document.querySelector(formFieldSelector)
+
+        // Automatically update the (hidden) form field whenever the Quill HTML content changes
+        quill.on("text-change", delta => {
+
+            // This is called whenever the Quill content changes
+
+            // Update form field value to Quill HTML contents
+            // If Quill contents are "empty" (including empty paragraphs, spaces, etc) then set empty string (to trigger validation)
+            formField.value = /^\s*$/.test(quill.root.innerText) ? "" : quill.root.innerHTML
+        })
+    }
+
+</script>
