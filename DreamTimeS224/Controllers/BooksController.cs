@@ -47,14 +47,41 @@ namespace DreamTimeS224.Controllers
             return View(book);
         }
 
-        // GET: Books/Create
-        public IActionResult Create()
+        //// GET: Books/Create
+        //public IActionResult Create()
+        //{
+        //    // Get a list of genres to populate a dropdown list and pass through using ViewData
+        //    ViewData["GenreList"] = new SelectList(_context.Genres, "Id", "Name");
+
+        //    // Load the Create view
+        //    return View();
+        //}
+
+        // GET: Books/Create/[id?]
+        //[HttpGet("Books/Create/{id?}")]
+        public async Task<IActionResult> Create(string? id)
         {
             // Get a list of genres to populate a dropdown list and pass through using ViewData
             ViewData["GenreList"] = new SelectList(_context.Genres, "Id", "Name");
 
-            // Load the Create view
-            return View();
+            // If no ISBN (id) has been supplied, just load the view
+            if (id == null) return View();
+
+            // Get book from the ISBN (id) passed in
+            Book? book = await _context.Books.FindAsync(id);
+
+            // Check if the book does NOT exist
+            if (book == null)
+            {
+                // Option 1: Display a nasty 404 Not Found error
+                //return NotFound("No book with that ISBN was found.");
+
+                // Option 2: Redirect back to the book listing/index
+                return RedirectToAction(nameof(Index));
+            }
+
+            // Load the Create view with the book model
+            return View(book);
         }
 
         // POST: Books/Create
@@ -87,7 +114,15 @@ namespace DreamTimeS224.Controllers
             // Option 2: Remove/ignore validation for the Genre property
             ModelState.Remove("Genre");
 
-            // TODO: Check if ISBN is already in use (book exists)
+            // Check if ISBN is already in use (book exists)
+            if (null != await _context.Books.FindAsync(book.ISBN))
+            {
+                // Option 1: Bad UX
+                //return BadRequest("ISBN already exists.");
+
+                // Option 2: Pass back a custom validation error message
+                ModelState.AddModelError("ISBN", "ISBN already exists.");
+            }
 
             // Check if model is valid
             if (ModelState.IsValid)

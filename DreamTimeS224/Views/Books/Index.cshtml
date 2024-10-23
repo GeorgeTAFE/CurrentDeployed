@@ -65,6 +65,9 @@
                 @Html.DisplayFor(modelItem => item.Copies)
             </td>
             <td>
+                <a asp-action="Create" asp-route-id="@item.ISBN" class="btn btn-sm btn-secondary" title="Duplicate">
+                    <i class="bi bi-copy" aria-label="Duplicate"></i>
+                </a>
                 <a asp-action="Edit" asp-route-id="@item.ISBN" class="btn btn-sm btn-secondary" title="Edit">
                     <i class="bi bi-pencil-fill" aria-label="Edit"></i>
                 </a>
