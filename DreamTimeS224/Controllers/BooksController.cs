@@ -254,5 +254,13 @@ namespace DreamTimeS224.Controllers
         {
             return _context.Books.Any(e => e.ISBN == id);
         }
+
+        // GET: Books/ViewAll
+        public async Task<IActionResult> ViewAll()
+        {
+            // Get the list of books with their associated genres
+            // This basically creates an INNER JOIN between Books and Genres
+            return View(await _context.Books.Include(b => b.Genre).ToListAsync());
+        }
     }
 }

@@ -35,8 +35,43 @@ body {
 }
 
 
-/* Manage books */
+/* Book card, e.g. Books/ViewAll */
 
+.book-card {}
+
+/* Set a fixed height on the image container (constrain images) */
+.book-card__image-container {
+    height: 200px;
+    text-align: center;
+}
+
+/* Don't let the image grow outside of its container */
+.book-card__image-container img {
+    max-height: 100%;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+}
+
+.book-card__title {
+    font-size: 1.3em;
+    margin-top: 0.8em;
+}
+
+.book-card__description {
+    height: 250px;
+    overflow-y: auto;
+}
+
+.book-card__more-info {
+    margin-top: 0.5em;
+    padding-top: 0.5em;
+    border-top: 1px solid #ddd;
+    text-align: center;
+}
+
+
+/* Manage books */
 .manage-books-table td {
     vertical-align: middle;
 }

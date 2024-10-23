@@ -1,0 +1,32 @@
+﻿@model IEnumerable<DreamTimeS224.Models.Book>
+
+@{
+    ViewData["Title"] = "View all books";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row justify-content-center gap-2">
+    @foreach (var book in Model)
+    {
+        <article class="book-card card p-0 col-6 col-md-4 col-lg-3">
+            <header class="card-header">
+                <div class="book-card__image-container">
+                    <partial name="_BookImagePartial" model="book" />
+                </div>
+                <h2 class="book-card__title">@book.Title</h2>
+            </header>
+            <section class="card-body">
+                <div class="book-card__description">
+                    @Html.DisplayFor(_ => book.Description)
+                </div>
+                <div class="book-card__more-info">
+                    <a href="#" class="btn btn-primary">More info</a>
+                </div>
+            </section>
+            <footer class="card-footer">
+                <p>Author: @book.Author</p>
+            </footer>
+        </article>
+    }
+</div>
