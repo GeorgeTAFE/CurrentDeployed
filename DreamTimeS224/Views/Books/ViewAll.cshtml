@@ -6,4 +6,20 @@
 
 <h1>@ViewData["Title"]</h1>
 
+<form asp-action="ViewAll" asp-controller="Books" method="get" class="book-search-form">
+
+    @Html.Editor("search", new { htmlAttributes = new { aria_label = "Search for a book", placeholder = "Search...", @class = "form-control form-control-sm w-auto" } })
+
+    <button type="submit" class="btn btn-primary">
+        <i class="bi bi-search-heart"></i>
+        Search
+    </button>
+
+    <a asp-action="ViewAll" class="btn btn-secondary">
+        <i class="bi bi-arrow-counterclockwise"></i>
+        Reset
+    </a>
+
+</form>
+
 <partial name="_BookCardListPartial" model="Model" />
