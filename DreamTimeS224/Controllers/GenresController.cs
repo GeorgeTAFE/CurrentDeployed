@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DreamTimeS224.Data;
 using DreamTimeS224.Models;
+using Microsoft.AspNetCore.Mvc.Razor.Compilation;
 
 namespace DreamTimeS224.Controllers
 {
@@ -22,7 +23,7 @@ namespace DreamTimeS224.Controllers
         // GET: Genres
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Genres.ToListAsync());
+            return View(await _context.Genres.Include(g => g.Books).ToListAsync());
         }
 
         // GET: Genres/Details/5
@@ -144,9 +145,20 @@ namespace DreamTimeS224.Controllers
             {
                 _context.Genres.Remove(genre);
             }
+            
+            // Check if genre has books - stop deletion
+            if (_context.Books.Where(b => b.Genre.Id == id).Any())
+            {
+                ModelState.AddModelError("Id", "Cannot delete genre as it has books in it.");
+            }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View("Delete", genre);
         }
 
         private bool GenreExists(int id)

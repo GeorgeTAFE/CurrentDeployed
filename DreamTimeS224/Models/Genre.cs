@@ -10,5 +10,9 @@ namespace DreamTimeS224.Models
         [Required]
         [StringLength(50, MinimumLength = 2)]
         public string Name { get; set; } = null!;  // Suppress null warnings using the ! (null-forgiving) operator
+
+
+        // Reference (navigation property) back to the list of Books
+        public IEnumerable<Book>? Books { get; set; } = null;
     }
 }
