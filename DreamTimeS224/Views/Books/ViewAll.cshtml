@@ -10,6 +10,13 @@
 
     @Html.Editor("search", new { htmlAttributes = new { aria_label = "Search for a book", placeholder = "Search...", @class = "form-control form-control-sm w-auto" } })
 
+    @Html.DropDownList(
+        "genreId",
+        ViewBag.GenreList,
+        "<All genres>",
+        new { aria_label = "Select a genre", @class = "form-select form-select-sm w-auto" }
+    )
+
     <button type="submit" class="btn btn-primary">
         <i class="bi bi-search-heart"></i>
         Search

@@ -256,11 +256,35 @@ namespace DreamTimeS224.Controllers
         }
 
         // GET: Books/ViewAll
-        public async Task<IActionResult> ViewAll()
+        public async Task<IActionResult> ViewAll(string? search, int? genreId)
         {
+            // Get all books
+            IQueryable<Book> books = _context.Books;
+
+            // Check if search parameter given
+            //if (search != null)
+            if (!string.IsNullOrEmpty(search))
+            {
+                // Filter book results
+                books = books.Where(b => b.Title.Contains(search) || b.Author.Contains(search) || b.Description.Contains(search));
+            }
+
+            // Check if genreId parameter given
+            if (genreId != null)
+            {
+                // Filter book results
+                books = books.Where(b => b.GenreId == genreId);
+            }
+
+            // Get a list of genres to populate a dropdown list and pass through using ViewData
+            ViewData["GenreList"] = new SelectList(_context.Genres, "Id", "Name");
+
+            // Sort the books, then pass books + genres into the view
+            return View(await books.OrderBy(b => b.Title).Include(b => b.Genre).ToListAsync());
+
             // Get the list of books with their associated genres
             // This basically creates an INNER JOIN between Books and Genres
-            return View(await _context.Books.Include(b => b.Genre).ToListAsync());
+            //return View(await _context.Books.Include(b => b.Genre).ToListAsync());
         }
     }
 }
