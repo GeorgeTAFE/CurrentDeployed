@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DreamTimeS224.Models
 {
@@ -31,5 +32,9 @@ namespace DreamTimeS224.Models
 
         // new RoomType()
         // new RoomType("My Room", 100)
+
+
+        // Reference (navigation property) back to the list of Rooms
+        public IEnumerable<Room>? Rooms { get; set; } = null;
     }
 }

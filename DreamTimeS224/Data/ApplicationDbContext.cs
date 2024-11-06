@@ -26,7 +26,8 @@ namespace DreamTimeS224.Data
             // Define foreign key cascade rules
             builder.Entity<Room>()
                 .HasOne(e => e.RoomType)
-                .WithMany()
+                .WithMany(rt => rt.Rooms)
+                .HasForeignKey(e => e.RoomTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Add customisation for our models/entities
