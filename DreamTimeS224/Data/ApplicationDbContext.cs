@@ -11,6 +11,8 @@ namespace DreamTimeS224.Data
         public DbSet<Book> Books { get; set; }
         public DbSet<RoomType> RoomTypes { get; set; }
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<Timeslot> Timeslots { get; set; }
+        public DbSet<SessionType> SessionTypes { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
