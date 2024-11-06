@@ -33,7 +33,9 @@
                 @* <a asp-action="Details" asp-route-id="@item.Id">Details</a> | *@
 
                 @* Condition delete button - only allow if genre has no books *@
-                @if (item.Books.Any())
+                @* @if (item.Books != null ? item.Books.Any() : false) *@
+                @* @if (item.Books != null && item.Books.Any()) *@
+                @if (item.Books?.Any() ?? false)
                 {
                     <a title="Cannot delete genre if it has books" class="btn btn-sm btn-secondary">
                         <i class="bi bi-trash-fill"></i>

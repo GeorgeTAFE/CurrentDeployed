@@ -1,14 +1,15 @@
 ﻿@model IEnumerable<DreamTimeS224.Models.RoomType>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Manage room types";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">+ Add room type</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -17,6 +18,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Capacity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rooms)
             </th>
             <th></th>
         </tr>
@@ -31,9 +35,27 @@
                 @Html.DisplayFor(modelItem => item.Capacity)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @String.Join(", ", item.Rooms?.Select(r => r.Code) ?? [])
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">
+                    <i class="bi bi-pencil-fill"></i>
+                    Edit
+                </a>
+                @if (item.Rooms?.Any() ?? false)
+                {
+                    <a title="Cannot delete room type if it has rooms" class="btn btn-sm btn-secondary">
+                        <i class="bi bi-trash-fill"></i>
+                        Delete
+                    </a>
+                }
+                else
+                {
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash-fill"></i>
+                        Delete
+                    </a>
+                }
             </td>
         </tr>
 }

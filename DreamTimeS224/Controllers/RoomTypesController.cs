@@ -22,7 +22,8 @@ namespace DreamTimeS224.Controllers
         // GET: RoomTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.RoomTypes.ToListAsync());
+            return View(await _context.RoomTypes.Include(rt => rt.Rooms).ToListAsync());
+            //return View(await _context.RoomTypes.ToListAsync());
         }
 
         // GET: RoomTypes/Details/5
@@ -145,8 +146,20 @@ namespace DreamTimeS224.Controllers
                 _context.RoomTypes.Remove(roomType);
             }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            // Check if room type has rooms - stop deletion
+            if (_context.Rooms.Where(r => r.RoomTypeId == id).Any())
+            {
+                ModelState.AddModelError("Id", "Cannot delete room type when it has rooms.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View("Delete", roomType);
+            
         }
 
         private bool RoomTypeExists(int id)
