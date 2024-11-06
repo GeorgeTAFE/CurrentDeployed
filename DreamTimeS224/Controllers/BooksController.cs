@@ -207,7 +207,7 @@ namespace DreamTimeS224.Controllers
 
                 // Redirect the user to the Index action (listing of models)
                 return RedirectToAction(nameof(Index));
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
             }
 
             // Get a list of genres to populate a dropdown list and pass through using ViewData
