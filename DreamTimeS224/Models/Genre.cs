@@ -13,6 +13,6 @@ namespace DreamTimeS224.Models
 
 
         // Reference (navigation property) back to the list of Books
-        public IEnumerable<Book>? Books { get; set; } = null;
+        public ICollection<Book>? Books { get; set; } = null;
     }
 }

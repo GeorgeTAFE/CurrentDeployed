@@ -35,6 +35,6 @@ namespace DreamTimeS224.Models
 
 
         // Reference (navigation property) back to the list of Rooms
-        public IEnumerable<Room>? Rooms { get; set; } = null;
+        public ICollection<Room>? Rooms { get; set; } = null;
     }
 }
