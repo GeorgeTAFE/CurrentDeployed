@@ -14,6 +14,7 @@ namespace DreamTimeS224.Data
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Timeslot> Timeslots { get; set; }
         public DbSet<SessionType> SessionTypes { get; set; }
+        public DbSet<Session> Sessions { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -89,11 +90,30 @@ namespace DreamTimeS224.Data
              * Define foreign key cascade rules
              */
 
+            // Room
             builder.Entity<Room>()
                 .HasOne(e => e.RoomType)
                 .WithMany(rt => rt.Rooms)
                 .HasForeignKey(e => e.RoomTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // Session
+            builder.Entity<Session>()
+                .HasOne(e => e.StartTime)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Session>()
+                .HasOne(e => e.EndTime)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Session>()
+                .HasOne(e => e.SessionType)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+
 
 
             // Add customisation for our models/entities
