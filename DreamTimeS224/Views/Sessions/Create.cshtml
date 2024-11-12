@@ -1,0 +1,47 @@
+﻿@model DreamTimeS224.Models.Session
+
+@{
+    ViewData["Title"] = "Create session";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" class="d-flex flex-column gap-2">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SessionTypeId" class="control-label"></label>
+                <select asp-for="SessionTypeId" class ="form-control" asp-items="ViewBag.SessionTypeId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartTimeId" class="control-label"></label>
+                <select asp-for="StartTimeId" class ="form-control" asp-items="ViewBag.StartTimeId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndTimeId" class="control-label"></label>
+                <select asp-for="EndTimeId" class ="form-control" asp-items="ViewBag.EndTimeId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" class="form-control" asp-items="@Html.GetEnumSelectList<Session.StatusEnum>()"></select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
