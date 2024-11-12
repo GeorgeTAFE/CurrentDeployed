@@ -44,12 +44,57 @@ namespace DreamTimeS224.Data
                 new Room { Code = "M04", RoomTypeId = 2 }
             );
 
-            // Define foreign key cascade rules
+            builder.Entity<SessionType>().HasData(
+                new SessionType { Id = 1, Name = "Morning" },
+                new SessionType { Id = 2, Name = "Afternoon" },
+                new SessionType { Id = 3, Name = "Evening" }
+            );
+
+
+            /*
+             * Generate a list of timeslots in 30-minute increments
+             */
+
+            // List to hold timeslots
+            List<Timeslot> timeslots = new List<Timeslot>();
+
+            // OPTION 1: Use TimeOnly to ignore the irrelevant date as much as possible
+            //TimeOnly startTime = new TimeOnly(8, 0, 0);
+            //TimeOnly endTime = new TimeOnly(22, 0, 0);
+            //for (TimeOnly currentTime = startTime; currentTime <= endTime; currentTime = currentTime.AddMinutes(30))
+            //{
+            //    timeslots.Add(new Timeslot { Time = new DateTime(new DateOnly(), currentTime) });
+            //}
+
+            // OPTION 2: Use DateTime and a simple int in the loop
+            DateTime startDateTime = new DateTime(1, 1, 1, 8, 0, 0);  // 8:00AM
+            DateTime endDateTime = new DateTime(1, 1, 1, 22, 0, 0);  // 10:00PM
+            for (int minutes = 0; startDateTime.AddMinutes(minutes) <= endDateTime; minutes += 30)
+            {
+                timeslots.Add(new Timeslot { Time = startDateTime.AddMinutes(minutes) });
+            }
+            
+            // Add list of timeslots to EF collection
+            builder.Entity<Timeslot>().HasData(timeslots);
+
+            // OPTION 3: Manually add each timeslot to EF collection
+            //builder.Entity<Timeslot>().HasData(
+            //    new Timeslot { Time = new DateTime(2000, 1, 1, 8, 0, 0) },  // 8:00 AM
+            //    new Timeslot { Time = new DateTime(2000, 1, 1, 8, 30, 0) },  // 8:30 AM
+            //    new Timeslot { Time = new DateTime(2000, 1, 1, 9, 0, 0) }  // 9:00 AM
+            //);
+
+
+            /*
+             * Define foreign key cascade rules
+             */
+
             builder.Entity<Room>()
                 .HasOne(e => e.RoomType)
                 .WithMany(rt => rt.Rooms)
                 .HasForeignKey(e => e.RoomTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
+
 
             // Add customisation for our models/entities
             base.OnModelCreating(builder);
