@@ -55,12 +55,25 @@ namespace DreamTimeS224.Controllers
             return View(session);
         }
 
+        private void PopulateViewData(DateTime? selectedStartTime, DateTime? selectedEndTime, int? selectedSessionTypeId)
+        {
+            ViewData["StartTimeId"] = new SelectList(_context.Timeslots, "Time", "TimeFormatted", selectedStartTime);
+            ViewData["EndTimeId"] = new SelectList(_context.Timeslots, "Time", "TimeFormatted", selectedEndTime);
+            ViewData["SessionTypeId"] = new SelectList(_context.SessionTypes, "Id", "Name", selectedSessionTypeId);
+        }
+
+        private void PopulateViewData()
+        {
+            PopulateViewData(null, null, null);
+        }
+
         // GET: Sessions/Create
         public IActionResult Create()
         {
-            ViewData["EndTimeId"] = new SelectList(_context.Timeslots, "Time", "Time");
-            ViewData["SessionTypeId"] = new SelectList(_context.SessionTypes, "Id", "Name");
-            ViewData["StartTimeId"] = new SelectList(_context.Timeslots, "Time", "Time");
+            //ViewData["StartTimeId"] = new SelectList(_context.Timeslots, "Time", "TimeFormatted");
+            //ViewData["EndTimeId"] = new SelectList(_context.Timeslots, "Time", "TimeFormatted");
+            //ViewData["SessionTypeId"] = new SelectList(_context.SessionTypes, "Id", "Name");
+            PopulateViewData();
             return View();
         }
 
@@ -71,15 +84,24 @@ namespace DreamTimeS224.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Date,SessionTypeId,StartTimeId,EndTimeId,Status")] Session session)
         {
+            // Check for existing session (primary key already exists - date + session type)
+            if (SessionExists(session.Date, session.SessionTypeId))
+            {
+                //return BadRequest("session exists...");
+                ModelState.AddModelError("Date", "Session already exists (same date and session type).");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(session);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EndTimeId"] = new SelectList(_context.Timeslots, "Time", "Time", session.EndTimeId);
-            ViewData["SessionTypeId"] = new SelectList(_context.SessionTypes, "Id", "Name", session.SessionTypeId);
-            ViewData["StartTimeId"] = new SelectList(_context.Timeslots, "Time", "Time", session.StartTimeId);
+
+            //ViewData["EndTimeId"] = new SelectList(_context.Timeslots, "Time", "Time", session.EndTimeId);
+            //ViewData["SessionTypeId"] = new SelectList(_context.SessionTypes, "Id", "Name", session.SessionTypeId);
+            //ViewData["StartTimeId"] = new SelectList(_context.Timeslots, "Time", "Time", session.StartTimeId);
+            PopulateViewData(session.StartTimeId, session.EndTimeId, session.SessionTypeId);
             return View(session);
         }
 
@@ -96,9 +118,10 @@ namespace DreamTimeS224.Controllers
             {
                 return NotFound();
             }
-            ViewData["EndTimeId"] = new SelectList(_context.Timeslots, "Time", "Time", session.EndTimeId);
-            ViewData["SessionTypeId"] = new SelectList(_context.SessionTypes, "Id", "Name", session.SessionTypeId);
-            ViewData["StartTimeId"] = new SelectList(_context.Timeslots, "Time", "Time", session.StartTimeId);
+            //ViewData["EndTimeId"] = new SelectList(_context.Timeslots, "Time", "Time", session.EndTimeId);
+            //ViewData["SessionTypeId"] = new SelectList(_context.SessionTypes, "Id", "Name", session.SessionTypeId);
+            //ViewData["StartTimeId"] = new SelectList(_context.Timeslots, "Time", "Time", session.StartTimeId);
+            PopulateViewData(session.StartTimeId, session.EndTimeId, session.SessionTypeId);
             return View(session);
         }
 
@@ -123,7 +146,7 @@ namespace DreamTimeS224.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SessionExists(session.Date))
+                    if (!SessionExists(session.Date, session.SessionTypeId))
                     {
                         return NotFound();
                     }
@@ -134,9 +157,8 @@ namespace DreamTimeS224.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EndTimeId"] = new SelectList(_context.Timeslots, "Time", "Time", session.EndTimeId);
-            ViewData["SessionTypeId"] = new SelectList(_context.SessionTypes, "Id", "Name", session.SessionTypeId);
-            ViewData["StartTimeId"] = new SelectList(_context.Timeslots, "Time", "Time", session.StartTimeId);
+
+            PopulateViewData(session.StartTimeId, session.EndTimeId, session.SessionTypeId);
             return View(session);
         }
 
@@ -176,9 +198,9 @@ namespace DreamTimeS224.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SessionExists(DateTime id)
+        private bool SessionExists(DateTime date, int sessionTypeId)
         {
-            return _context.Sessions.Any(e => e.Date == id);
+            return _context.Sessions.Any(s => s.Date == date && s.SessionTypeId == sessionTypeId);
         }
     }
 }
