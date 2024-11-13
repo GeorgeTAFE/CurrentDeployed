@@ -100,3 +100,30 @@ body {
 body :is(.ql-editor p, .ql-editor ol, .ql-editor pre, .ql-editor blockquote, .ql-editor h1, .ql-editor h2, .ql-editor h3, .ql-editor h4, .ql-editor h5, .ql-editor h6) {
     margin-bottom: 1rem;
 }
+
+
+/* Available/unavailable status in tables */
+
+.status-available {
+    color: #18bd2e;
+}
+.status-unavailable {
+    color: #dc3b45;
+}
+
+/*.status-available::before, .status-unavailable::before {*/
+:is(.status-available, .status-unavailable)::before {
+    display: inline-block;
+    font-family: bootstrap-icons !important;
+    font-size: 1.3em;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.status-available::before {
+    content: '\F26A';
+}
+
+.status-unavailable::before {
+    content: '\F622';
+}

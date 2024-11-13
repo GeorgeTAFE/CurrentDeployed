@@ -18,10 +18,12 @@ namespace DreamTimeS224.Models
 
         [Required]
         [DisplayName("Start Time")]
+        [DisplayFormat(DataFormatString = "{0:hh:mm tt}")]
         public DateTime StartTimeId { get; set; }
 
         [Required]
         [DisplayName("End Time")]
+        [DisplayFormat(DataFormatString = "{0:hh:mm tt}")]
         public DateTime EndTimeId { get; set; }
 
         public StatusEnum Status { get; set; }
@@ -35,10 +37,13 @@ namespace DreamTimeS224.Models
 
         // Associations (Navigation Properties)
 
+        [DisplayName("Session Type")]
         public SessionType? SessionType { get; set; } = null;
 
+        [DisplayName("Start Time")]
         public Timeslot? StartTime { get; set; } = null;
-        
+
+        [DisplayName("End Time")]
         public Timeslot? EndTime { get; set; } = null;
     }
 }

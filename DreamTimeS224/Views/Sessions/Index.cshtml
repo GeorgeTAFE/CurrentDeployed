@@ -1,28 +1,32 @@
 ﻿@model IEnumerable<DreamTimeS224.Models.Session>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Manage sessions";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">+ Add session</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+                Weekday
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.SessionType)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StartTime)
+                Session Time
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EndTime)
+                @Html.DisplayNameFor(model => model.Status)
             </th>
             <th></th>
         </tr>
@@ -31,16 +35,19 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Status)
+                @item.Date.DayOfWeek
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SessionType.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StartTime.Time)
+                @Html.DisplayFor(modelItem => item.StartTimeId) - @Html.DisplayFor(modelItem => item.EndTime.Time)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndTime.Time)
+            <td class="status-@item.Status.ToString().ToLower()">
+                @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-sessionTypeId="@item.SessionTypeId" asp-route-dateString="@item.Date.ToString("yyyy-MM-dd")"
