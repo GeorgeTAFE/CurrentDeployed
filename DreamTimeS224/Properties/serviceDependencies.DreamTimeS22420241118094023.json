@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "mssql2": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/DreamTimeS22420241118094023/providers/Microsoft.ServiceLinker/linkers/ConnectionStringsDreamTimeConnectionStri_0775C9F85D",
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/dreamtimesdbserver/databases/DreamTimeS224_db",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:DreamTimeConnectionString"
+    }
+  }
+}
